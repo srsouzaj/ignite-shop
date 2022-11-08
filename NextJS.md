@@ -91,6 +91,6 @@ export const Document = () => {
 
 ```
 
-O arquivo `_document.tsx` é a `index.html` de nossa aplicação, sendo carregada em toda nossa aplicação. 
+O arquivo `_document.tsx` é a `index.html` de nossa aplicação, sendo carregada em toda nossa aplicação. Não é recomendado colocar arquivos de estilização de `_document.tsx`
 
 Uma dica é mantê-lo mais simples possível.
