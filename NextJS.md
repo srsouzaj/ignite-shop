@@ -1,6 +1,5 @@
 ReactJS tradicional, Back e front são separados, apesar da interatividade. Porém trouxe um problema de indexação para bots, SEO, etc, acessando nossa aplicação com JS desabilitados, ou com timeOut curto, não aguardando o retorno da API.
 
-![image-20221008200916792](C:\Users\Jorge de Souza\AppData\Roaming\Typora\typora-user-images\image-20221008200916792.png)
 
 NextJS nasceu com conceito SSR (Server Side Rendering) por uma necessidade de SEO.
 
@@ -12,12 +11,6 @@ Ela carrega todo o código recebido, aguardando ter algo visual em tela.
 
 
 
-![image-20221008201706899](C:\Users\Jorge de Souza\AppData\Roaming\Typora\typora-user-images\image-20221008201706899.png)
-
-
-
-
-
 Recentemente, outro modelo surgiu do NextJs, conhecido como SSG (Static Site Generation), não sendo necessário várias renderizações ao Backend, apenas se houver alterações em um determinado período de tempo.
 
 
@@ -25,9 +18,6 @@ Recentemente, outro modelo surgiu do NextJs, conhecido como SSG (Static Site Gen
 ## NextJS
 
 NextJS é reactJS.
-
-![image-20221008203721025](C:\Users\Jorge de Souza\AppData\Roaming\Typora\typora-user-images\image-20221008203721025.png)
-
 Você pode instalar o typescript usando o seguinte comando:
 
 ```typescript
@@ -45,16 +35,6 @@ O próprio NextJs tem a página 404 - que é configurável.
 Para cada página criada é criada uma rota.
 
 Mas, existem rotas que precisam de parâmetros, como id, etc. Neste caso, é necessário criar subpastas ou slugs, que é o nome parametrizado.
-
-
-
-![image-20221008205255441](C:\Users\Jorge de Souza\AppData\Roaming\Typora\typora-user-images\image-20221008205255441.png)
-
-![image-20221008205309528](C:\Users\Jorge de Souza\AppData\Roaming\Typora\typora-user-images\image-20221008205309528.png)
-
-![image-20221008205504627](C:\Users\Jorge de Souza\AppData\Roaming\Typora\typora-user-images\image-20221008205504627.png)
-
-![image-20221008205511647](C:\Users\Jorge de Souza\AppData\Roaming\Typora\typora-user-images\image-20221008205511647.png)
 
 
 
