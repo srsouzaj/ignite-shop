@@ -1,19 +1,17 @@
 import { AppProps } from "next/app";
 import Logo from "../assets/Logo";
+import { Header } from "../components/Header";
 import { globalStyles } from "../styles/global";
 
 
-import { Container, Header } from "../styles/pages/app";
+import { Container } from "../styles/pages/app";
 
 globalStyles();
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <Container>
-      <Header>
-        <Logo />
-      </Header>
-
+      <Header />
       <Component {...pageProps} />
     </Container>
   );
