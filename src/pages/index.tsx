@@ -17,7 +17,7 @@ interface HomeInterface {
     id: string,
     name: string,
     imageUrl: string,
-    price: number
+    price: string
   }[]
 }
 
@@ -34,7 +34,9 @@ export default function Home({ products }: HomeInterface) {
       {products.map(product => {
         return (
           <Link href={`/product/${product.id}`}
-            key={product.id}>
+            key={product.id}
+            prefetch={false}
+          >
             <Product
 
               className="keen-slider__slide">
