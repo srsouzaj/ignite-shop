@@ -38,6 +38,7 @@ export const Cart = () => {
                             </CartProductDetails>
                         </CartProduct>
                     </section>
+
                     <CartFinalization>
                         <FinalizationDetails>
 

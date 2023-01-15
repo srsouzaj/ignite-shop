@@ -1,15 +1,13 @@
-import { GetStaticProps } from "next"
 import Head from "next/head"
 import Image from "next/future/image"
 import Link from "next/link"
-import { HomeContainer, Product } from "../styles/pages/home"
+import { GetStaticProps } from "next"
 
-import { useKeenSlider } from "keen-slider/react"
 import Stripe from "stripe"
-
-import "keen-slider/keen-slider.min.css"
 import { stripe } from "../lib/stripe"
-
+import { HomeContainer, Product, SliderContainer } from "../styles/pages/home"
+import useEmblaCarousel from "embla-carousel-react"
+import { CartButton } from "../components/CartButton"
 
 interface HomeInterface {
   products: {
@@ -21,11 +19,10 @@ interface HomeInterface {
 }
 
 export default function Home({ products }: HomeInterface) {
-  const [sliderRef] = useKeenSlider({
-    slides: {
-      perView: 3,
-      spacing: 48
-    }
+  const [emblaRef] = useEmblaCarousel({
+    align: "start",
+    skipSnaps: false,
+    dragFree: true
   })
 
   return (
@@ -33,29 +30,38 @@ export default function Home({ products }: HomeInterface) {
       <Head>
         <title>Home | Ignite Shop</title>
       </Head>
-      <HomeContainer ref={sliderRef} className="keen-slider">
+      <div style={{ overflow: "hidden", width: "100%" }}>
 
+        <HomeContainer>
+          <div className="embla" ref={emblaRef}>
+            <SliderContainer className="embla__container container">
 
-        {products.map(product => {
-          return (
-            <Link href={`/product/${product.id}`}
-              key={product.id}
-              prefetch={false}
-            >
-              <Product
+              {products.map(product => {
+                return (
+                  <Link href={`/product/${product.id}`}
+                    key={product.id}
+                    prefetch={false}
+                  >
+                    <Product
+                      className="embla__slide">
+                      <Image src={product.imageUrl} width={520} height={480} alt="" />
 
-                className="keen-slider__slide">
-                <Image src={product.imageUrl} width={520} height={480} alt="" />
+                      <footer>
+                        <div>
+                          <strong>{product.name}</strong>
+                          <span>{product.price}</span>
+                        </div>
+                        <CartButton color="green" size="large" />
+                      </footer>
+                    </Product>
+                  </Link>
+                )
+              })}
 
-                <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
-                </footer>
-              </Product>
-            </Link>
-          )
-        })}
-      </HomeContainer>
+            </SliderContainer>
+          </div>
+        </HomeContainer>
+      </div>
     </>
   )
 }
