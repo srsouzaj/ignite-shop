@@ -8,14 +8,11 @@ import { stripe } from "../lib/stripe"
 import { HomeContainer, Product, SliderContainer } from "../styles/pages/home"
 import useEmblaCarousel from "embla-carousel-react"
 import { CartButton } from "../components/CartButton"
+import { useCart } from "../hooks/useCart"
+import { ProductInterface } from "../context/CartContext"
 
 interface HomeInterface {
-  products: {
-    id: string,
-    name: string,
-    imageUrl: string,
-    price: string
-  }[]
+  products: ProductInterface[]
 }
 
 export default function Home({ products }: HomeInterface) {
@@ -24,6 +21,8 @@ export default function Home({ products }: HomeInterface) {
     skipSnaps: false,
     dragFree: true
   })
+
+  const { addToCart } = useCart()
 
   return (
     <>
@@ -51,7 +50,7 @@ export default function Home({ products }: HomeInterface) {
                           <strong>{product.name}</strong>
                           <span>{product.price}</span>
                         </div>
-                        <CartButton color="green" size="large" />
+                        <CartButton color="green" size="large" onClick={() => addToCart(product)} />
                       </footer>
                     </Product>
                   </Link>
