@@ -11,7 +11,7 @@ export interface ProductInterface {
 }
 
 interface CartContextData {
-  cartItems: ProductInterface[];
+  cartItems: Array<ProductInterface>;
   cartTotal: number;
   addToCart: (product: ProductInterface) => void;
   removeCartItem: (productId: string) => void;
