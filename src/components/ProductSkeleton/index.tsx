@@ -3,7 +3,7 @@ import { ProductSkeletonContainer, SkeletonItem } from "./styled";
 
 type ProductSkeletonProps = ComponentProps<typeof ProductSkeletonContainer>;
 
-export function ProductSkeleton({ ...props }: ProductSkeletonProps) {
+export const ProductSkeleton = ({ ...props }: ProductSkeletonProps) => {
     return (
         <ProductSkeletonContainer {...props}>
             <SkeletonItem />
