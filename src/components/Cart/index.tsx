@@ -4,12 +4,37 @@ import { X } from 'phosphor-react'
 import { CartClose, CartContent, CartFinalization, CartProduct, CartProductDetails, CartProductImage, FinalizationDetails } from "./styled"
 import Image from "next/future/image"
 import { useCart } from "../../hooks/useCart"
+import { useState } from "react"
+import axios from "axios"
 
 export const Cart = () => {
-    const { cartItems } = useCart()
+    const { cartItems, cartTotal, removeCartItem } = useCart()
 
-    console.log(cartItems.length)
-    // const cartQuantity = cartItems.length;
+    const cartQuantity = cartItems.length;
+    const formattedCartTotal = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(cartTotal)
+
+    const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+        useState(false);
+
+    async function handleCheckout() {
+        try {
+            setIsCreatingCheckoutSession(true);
+
+            const response = await axios.post("/api/checkout", {
+                products: cartItems,
+            });
+
+            const { checkoutUrl } = response.data;
+
+            window.location.href = checkoutUrl;
+        } catch (err) {
+            setIsCreatingCheckoutSession(false);
+            alert("Falha ao redirecionar ao checkout!");
+        }
+    }
 
     return (
         <Dialog.Root>
@@ -23,7 +48,7 @@ export const Cart = () => {
                     <h2>Sacola de Compras</h2>
 
                     <section>
-                        {/* {cartQuantity >= 0 ? (
+                        {cartQuantity >= 0 ? (
                             cartItems.map(cartItem => (
                                 <CartProduct key={cartItem.id}>
                                     <CartProductImage>
@@ -37,11 +62,11 @@ export const Cart = () => {
                                     <CartProductDetails>
                                         <p>{cartItem.name}</p>
                                         <strong>{cartItem.numberPrice}</strong>
-                                        <button>Remover</button>
+                                        <button onClick={() => removeCartItem(cartItem.id)}>Remover</button>
                                     </CartProductDetails>
                                 </CartProduct>
                             ))
-                        ) : <p>Parece que seu carrinho está vazio</p>} */}
+                        ) : <p>Parece que seu carrinho está vazio</p>}
                     </section>
 
                     <CartFinalization>
@@ -49,14 +74,18 @@ export const Cart = () => {
 
                             <div>
                                 <span>Quantidade</span>
-                                <p>2 itens</p>
+                                <p>{cartQuantity} {cartQuantity > 1 ? "itens" : "item"}</p>
                             </div>
                             <div>
                                 <span>Valor Total</span>
-                                <p>R$ 100,00</p>
+                                <p>{formattedCartTotal}</p>
                             </div>
                         </FinalizationDetails>
-                        <button>Finalizar</button>
+                        <button
+                            onClick={handleCheckout}
+                            disabled={isCreatingCheckoutSession || cartQuantity <= 0}>
+                            Finalizar
+                        </button>
                     </CartFinalization>
 
                 </CartContent>

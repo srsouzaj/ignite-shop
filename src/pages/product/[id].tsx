@@ -2,41 +2,29 @@ import axios from "axios"
 import { GetStaticPaths, GetStaticProps } from "next"
 import Head from "next/head"
 import Image from "next/image"
+import { useRouter } from "next/router"
 import { useState } from "react"
 import Stripe from "stripe"
+import { ProductInterface } from "../../context/CartContext"
+import { useCart } from "../../hooks/useCart"
 import { stripe } from "../../lib/stripe"
 import { ImageContainer, ProductContainer, ProductDetails } from "../../styles/pages/product"
 
-interface ProductInterface {
-    product: {
-        id: string;
-        name: string;
-        imageUrl: string;
-        price: string;
-        description: string
-        defaultPriceId: string;
-
-    }
+interface ProductsInterface {
+    product: ProductInterface
 }
 
-export default function Product({ product }: ProductInterface) {
-    const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
 
-    const handleBuyProduct = async () => {
-        try {
-            setIsCreatingCheckoutSession(true);
-            const response = await axios.post('/api/checkout', {
-                priceId: product.defaultPriceId
-            })
+export default function Product({ product }: ProductsInterface) {
+    const { isFallback } = useRouter()
 
-            const { checkoutUrl } = response.data;
-            window.location.href = checkoutUrl
-        }
-        catch (e) {
-            setIsCreatingCheckoutSession(false);
-            alert("Falha ao redirecionar ao checkout")
-        }
+    const { checkIfItemAlreadyExists, addToCart } = useCart()
+    const itemAlreadyInCart = checkIfItemAlreadyExists(product.id)
+
+    if (isFallback) {
+        return <p>Loading... </p>
     }
+
 
     return (
         <>
@@ -56,8 +44,8 @@ export default function Product({ product }: ProductInterface) {
 
                     <p>{product.description}</p>
 
-                    <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>
-                        Comprar agora
+                    <button disabled={itemAlreadyInCart} onClick={() => addToCart(product)}>
+                        {itemAlreadyInCart ? "Produto já está no carrinho " : "Comprar agora"}
                     </button>
                 </ProductDetails>
             </ProductContainer>
