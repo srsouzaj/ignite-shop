@@ -39,8 +39,6 @@ Lembrando que você precisa ter uma conta no [Figma](http://figma.com/)
 
 ## **🚀** Como Executar
 
-Como o repositório e siga o passo a passo de cada stack.
-
 ```bash
 ## Clone o projeto em sua máquina
 git clone [https://github.com/srsouzaj/](https://github.com/srsouzaj/nlwsetup)04-igniteshop.git
